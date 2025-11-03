@@ -192,12 +192,12 @@ function renderBadges(badges) {
     system_guardian: {
       img: "Images/Badges/system_guardian.png",
       text: "System Guardian",
-      desc: "Defend against a malware attack. (Locked)"
+      desc: "Defend against a malware attack."
     },
     elite_technician: {
       img: "Images/Badges/elite_technician.png",
       text: "Elite Technician",
-      desc: "Beat the Final Boss. (Locked)"
+      desc: "Beat the Final Boss."
     },
   };
 
