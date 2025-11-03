@@ -1,0 +1,128 @@
+body {
+  margin: 0;
+  background: #0b3b4a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.game-container {
+  display: flex;
+  gap: 2vh;
+  padding: 2vh;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* ✅ Original game size */
+#gameFrame {
+  width: 1080px;
+  height: 768px;
+  border: 3px solid #0a3240;
+  border-radius: 10px;
+  background: black;
+}
+
+.side-ui {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+  align-items: stretch;
+}
+
+.score-box {
+  background: rgba(0, 0, 0, 0.45);
+  border: 2px solid #04455c;
+  border-radius: 8px;
+  padding: 1vh;
+  text-align: center;
+  color: white;
+}
+
+.ui-button {
+  width: 100%;
+  padding: 1.2vh;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+  color: #fff;
+}
+.ui-button.red { background: #8d1b1b; }
+.ui-button.green { background: #0b6d3f; }
+
+#proceedBtn {
+  display: none;
+  opacity: 0.5;
+  pointer-events: none; /* disabled initially */
+  transition: opacity 0.25s;
+}
+
+#proceedBtn.attention {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1);}
+  50% { transform: scale(1.05);}
+ 100% { transform: scale(1);}
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.75);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #1a3240;
+  padding: 20px;
+  border-radius: 10px;
+  width: 320px;
+  text-align: center;
+  color: #fff;
+  animation: pop 0.3s ease-out;
+}
+
+.badge-img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 12px;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+
+/* ✅ Mobile & smaller laptops: Stack vertically */
+@media (max-width: 1400px) {
+  .game-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  #gameFrame {
+    margin-bottom: 2vh;
+  }
+}
