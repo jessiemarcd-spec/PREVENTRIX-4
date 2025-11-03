@@ -177,13 +177,64 @@ async function loadLeaderboard() {
   }
 }
 
-// Badge display helper
 function renderBadges(badges) {
-  const keys = ["safety_first", "maintenance_planner", "system_guardian", "elite_technician"];
-  return keys
-    .map(key => `<span class="badge ${badges[key] ? "unlocked" : ""}" title="${key.replace("_", " ")}"></span>`)
-    .join("");
+  const badgeInfo = {
+    safety_first: {
+      img: "Images/Badges/safety_first.png",
+      text: "Safety First!",
+      desc: "Get your kit and form up!"
+    },
+    maintenance_planner: {
+      img: "Images/Badges/maintenance_planner.png",
+      text: "Maintenance Planner!",
+      desc: "Know the steps in preventative maintenance."
+    },
+    system_guardian: {
+      img: "Images/Badges/system_guardian.png",
+      text: "System Guardian",
+      desc: "Defend against a malware attack. (Locked)"
+    },
+    elite_technician: {
+      img: "Images/Badges/elite_technician.png",
+      text: "Elite Technician",
+      desc: "Beat the Final Boss. (Locked)"
+    },
+  };
+
+  const keys = Object.keys(badgeInfo);
+
+  return keys.map(key => `
+    <img src="${badgeInfo[key].img}" 
+         class="badge ${badges[key] ? "unlocked" : ""}" 
+         data-title="${badgeInfo[key].text}"
+         data-desc="${badgeInfo[key].desc}"
+         data-unlocked="${badges[key]}"
+         alt="${key}">
+  `).join("");
 }
+
+document.addEventListener("mousemove", (e) => {
+  const tooltip = document.getElementById("badgeTooltip");
+  const target = e.target;
+
+  if (target.classList.contains("badge")) {
+    const name = target.getAttribute("data-title");
+    const desc = target.getAttribute("data-desc");
+    const unlocked = target.getAttribute("data-unlocked") === "true";
+
+    tooltip.innerHTML = `
+      <strong>${name}</strong><br>
+      ${desc}<br>
+      Status: ${unlocked ? "✅ Unlocked" : "❌ Locked"}
+    `;
+
+    tooltip.style.left = (e.pageX + 1) + "px";
+    tooltip.style.top = (e.pageY + 1) + "px";
+    tooltip.style.display = "block";
+  } else {
+    tooltip.style.display = "none";
+  }
+});
 
 // Run leaderboard loader once user is authenticated
 onAuthStateChanged(auth, async (user) => {

@@ -6,6 +6,7 @@ body {
   align-items: center;
   min-height: 100vh;
   overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .game-container {
@@ -99,8 +100,8 @@ body {
 }
 
 .badge-img {
-  width: 100px;
-  height: 100px;
+  width: 128px;
+  height: 128px;
   margin-bottom: 12px;
 }
 

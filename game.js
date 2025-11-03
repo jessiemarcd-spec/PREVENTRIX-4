@@ -114,7 +114,7 @@ window.addEventListener("message", async (event) => {
       completed = true;
       break;
 
-    case "badgeUnlock":
+    case "badgeEarned":
       pendingUnlocks[msg.badge] = true;
       showBadgeModal(msg.badge);
       break;

@@ -1,3 +1,4 @@
+// ✅ GameMaker → Website Communication Bridge
 function SendScore(v) {
     window.parent.postMessage({
         type: "scoreUpdate",
@@ -7,8 +8,8 @@ function SendScore(v) {
 
 function UnlockBadge(badge) {
     window.parent.postMessage({
-        type: "badgeUnlock",
-        badge: badge // ✅ matches game.js
+        type: "badgeEarned",
+        badge: badge // e.g. "safety_first"
     }, "*");
 }
 
@@ -17,7 +18,7 @@ function CompleteGame(nextScene) {
 
     window.parent.postMessage({
         type: "end",
-        resumeScene: Number(nextScene)  // ✅ correct field name
+        nextScene: Number(nextScene)
     }, "*");
 }
 

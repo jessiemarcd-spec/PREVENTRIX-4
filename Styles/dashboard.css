@@ -294,6 +294,8 @@ body::before {
 /* === Table === */
 /* Limit leaderboard height and make it scrollable */
 .leaderboard-container {
+  position: relative;
+  overflow: visible;
   width: 90%;
   max-width: 1000px;
   background: rgba(0, 0, 0, 0.75);
@@ -349,16 +351,16 @@ body::before {
 
 /* === Badge placeholders === */
 .badge {
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  background-color: #777;
-  border-radius: 50%;
+  width: 24px;
+  height: 24px;
   margin: 0 3px;
+  opacity: 0.35;
+  filter: grayscale(100%);
 }
 
 .badge.unlocked {
-  background-color: #00c8ff;
+  opacity: 1;
+  filter: none;
 }
 
 .btn {
@@ -372,6 +374,22 @@ body::before {
   margin-top:10px;
   font-weight:700;
 }
+
+.badge-tooltip {
+  position: fixed;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  pointer-events: none;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 9999;
+  display: none;
+  transition: opacity 0.08s ease-out, transform 0.08s ease-out;
+  transform: translateY(0);
+}
+
 
 /* === Responsive adjustments === */
 @media (max-width: 768px) {

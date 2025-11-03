@@ -15,7 +15,7 @@ export const scene = [
   },
   {
     name: "Narration",
-    text: "In these troubling times, only one team can get the job done: the <span color=cyan> Preventrix Maintenance Team! </span>",
+    text: "In these troubling times, only one team can get the job done: the <span color=cyan> Preventix Maintenance Team! </span>",
     bg: "Images/Background/black_background.png",
   },
   {
