@@ -75,7 +75,7 @@ html, body {
 
 /* Dialogue text */
 #dialogue-text {
-  font-size: 1.05rem;
+  font-size: 3.05rem;
   line-height: 1.5rem;
   color: #ffffff;
   user-select: none;
