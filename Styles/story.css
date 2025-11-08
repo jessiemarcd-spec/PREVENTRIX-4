@@ -81,6 +81,7 @@ html, body {
 }
 
 #dialogue-text {
+<<<<<<< HEAD
   font-size: 1.8rem;
   line-height: 2.4rem;
 
@@ -88,6 +89,11 @@ html, body {
   color: #9deaff;
   text-shadow: 0 0 6px rgba(100, 210, 255, 0.8);
 
+=======
+  font-size: 3.05rem;
+  line-height: 1.5rem;
+  color: #ffffff;
+>>>>>>> 2a246bc4e94d743d099f7b42e85a4a16f81a7d0e
   user-select: none;
   transition: color 0.2s ease;
 }
