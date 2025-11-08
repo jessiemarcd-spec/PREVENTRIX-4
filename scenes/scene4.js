@@ -97,10 +97,7 @@ export const scene = [
     bg: "Images/Background/intro_game2.png",
     text: "<i> TechGuard Academy Laboratories </i>"
   },
-  {
-    text: "<i> Cick 'Next' again to enter our next game. </i>",
-    bg: "Images/Background/black_background.png",
-  },
+
   {
     name: "Julius",
     text: "Room service! Someone ordered spare wires?",
@@ -134,7 +131,7 @@ export const scene = [
   },
   {
     name: "Joanah",
-    text: "You got a blower and brush with you from the storage wing, right?.",
+    text: "You got a blower and brush with you from the storage wing, right?",
     characters: [
       { id: "julius", img: "Images/Char/julius_neutral.png" },
       { id: "joanah", img: "Images/Char/joanah_explaining.png" }
@@ -158,11 +155,47 @@ export const scene = [
   },
   {
     name: "Joanah",
-    text: "Computers, like any other machine, needs some internal cleaning from time-to-time. Both in its <span color='orange> software </span> and its <span color='orange'> hardware. </span>",
+    text: "Computers, like any other machine, needs some internal cleaning from time-to-time. Both in its <span color='orange'> software </span> and its <span color='orange'> hardware. </span>",
     characters: [
       { id: "julius", img: "Images/Char/julius_neutral.png" },
       { id: "joanah", img: "Images/Char/joanah_explaining.png" }
     ],
+  },
+    {
+    name: "Joanah",
+    text: "Cleaning computers are a lot more complicated than it looks. It requires certain procedures that need careful, expert hands. <span class='glossary' data-doc='clean.pdf'> You can learn more about it here </span>",
+    characters: [
+      { id: "julius", img: "Images/Char/julius_neutral.png" },
+      { id: "joanah", img: "Images/Char/joanah_explaining.png" }
+    ],
+  },
+  {
+    name: "Julius",
+    text: "That sounds tough...",
+    characters: [
+      { id: "julius", img: "Images/Char/julius_neutral.png" },
+      { id: "joanah", img: "Images/Char/joanah_neutral.png" }
+    ],
+  },
+  {
+    name: "Julius",
+    text: "But I promised not to be a burden. Let me at it, then!",
+    characters: [
+      { id: "julius", img: "Images/Char/julius_happy.png" },
+      { id: "joanah", img: "Images/Char/joanah_happy.png" }
+    ],
+  },
+  {
+    name: "Joanah",
+    text: "You really are something else, huh? Alright, sport. Grab the blower and the brush and get to cleaning!",
+    characters: [
+      { id: "julius", img: "Images/Char/julius_happy.png" },
+      { id: "joanah", img: "Images/Char/joanah_excited.png", emotion: "laugh" }
+    ],
+  },
+  {
+    text: "<i> Cick 'Next' again to enter our next game. </i>",
+    bg: "Images/Background/black_background.png",
   },
   {
       action: {
