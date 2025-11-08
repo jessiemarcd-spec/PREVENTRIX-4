@@ -77,47 +77,79 @@ body {
 }
 
 /* Dialogue box at bottom */
+/* Dialogue box at bottom */
 .dialogue-box {
   position: absolute;
-  bottom: 0; left: 0;
-  width: 100%; height: 200px;
-  background: linear-gradient(to bottom,#0b3b4a 0%,#000000 100%);
-  padding: 20px;
-  font-size: 1.2em;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 230px;
+
+  /* ✅ Cleaner fade — transparent top */
+  background: linear-gradient(
+    to top,
+    rgba(0, 30, 45, 0.95) 0%,   /* bottom solid */
+    rgba(0, 30, 45, 0.80) 50%,
+    rgba(0, 30, 45, 0.40) 100%  /* top fully transparent */
+  );
+
+  padding: 26px 32px;
+  font-size: 1.35em;
   z-index: 3;
-  backdrop-filter: blur(4px); 
+
+  /* ❌ Removed blur effect */
+  /* backdrop-filter: blur(12px); */
+
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.45);
 }
 
+/* Character name */
 .dialogue-box .name {
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.55em;
+  color: #ffffff;
   margin-bottom: 10px;
+}
+
+/* Dialogue text */
+.dialogue-box .text {
+  color: #9deaff;
+  text-shadow: 0 0 10px rgba(100,210,255,0.85);
+  font-size: 1.25em;
+  line-height: 1.45em;
+  user-select: none;
 }
 
 /* "Next" button inside dialogue */
 .dialogue-box .next-btn {
   position: absolute;
-  bottom: 4px;
-  right: 20px;
-  width: 100px;
-  background: rgba(255, 255, 255, 0.5);
-  border: none;
-  color: #000;
-  font-size: 0.9em;
-  font-weight: normal;
-  padding: 6px 14px;
-  margin-top: 10px;
+  bottom: 16px; /* ✅ Moved up for better visibility */
+  right: 28px;
+
+  width: 120px;
+  padding: 10px 18px;
+
+  background: rgba(120, 220, 255, 0.88);
+  border: 2px solid #74caff;
+  border-radius: 10px;
+
+  color: #00131a;
+  font-size: 1.05em;
+  font-weight: 600;
+
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: all 0.2s ease-in-out;
 }
 
 .dialogue-box .next-btn:hover {
-  color: #e94560;
+  background: #ffffff;
+  transform: scale(1.06);
 }
 
 .dialogue-box .next-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.92);
 }
+
 
 /* UI buttons on top of dialogue (or elsewhere) */
 .ui {
@@ -215,7 +247,7 @@ button:active {
 }
 
 #character-layer {
-  position: absolute;
+  position: absolute !important;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -223,30 +255,69 @@ button:active {
   pointer-events: none;
 }
 
+/* ✅ Outer positioning — no size here */
 .character {
   position: absolute;
   bottom: 18vh !important;
+  left: 50%;
   transform: translateX(-50%);
-  
-  height: 60vh;   /* ✅ Everyone same height */
-  width: auto;    /* ✅ Natural width preserved */
-  max-width: none; /* ✅ Let wide characters breathe */
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+  --flip: scaleX(1);
+}
 
-  opacity: 0.5;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+/* ✅ Size should only apply to the image itself */
+.sprite-img {
+  height: 60vh;
+  width: auto;
+  max-width: none;
   object-fit: contain;
 }
 
-.character.active {
-  opacity: 1;
-  transform: translateX(-50%) scale(1.03);
+.character.active { opacity: 1; }
+
+.character .sprite-img { opacity: 1 !important; }
+
+.character .sprite-img { opacity: inherit; }
+
+.character:not(.active) .sprite-layer,
+.character:not(.active) .sprite-img {
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
 }
 
+.character.active .sprite-layer,
+.character.active .sprite-img {
+  opacity: 1;
+}
+
+/* ✅ Mobile adjustments */
+@media (max-width:700px) {
+  .sprite-img {
+    height: 40vh;
+  }
+}
+
+/* ✅ Offsets — No Transform Override */
 .character.center { left: 50%; }
 .character.left { left: 30%; }
 .character.right { left: 70%; }
 .character.far-left { left: 15%; }
 .character.far-right { left: 85%; }
+
+/* ✅ Animation + Flip Safely Here */
+.sprite-layer {
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+/* ✅ Flip only modifies inner layer */
+.character.flip-left .sprite-layer {
+  transform: scaleX(-1);
+  --flip: scaleX(-1);
+}
 
 
 @media (max-width: 768px) {
@@ -267,48 +338,46 @@ button:active {
 
 /* --- Emotions --- */
 
-/* Shock / Surprise */
-.emotion-shock {
+/* ✅ Emotions: animate only the inner layer */
+.sprite-layer.emotion-shock {
   animation: shockBounce 0.4s ease-out;
 }
 
 @keyframes shockBounce {
-  0% { transform: translateX(-50%) translateY(0) scale(1); }
-  20% { transform: translateX(-50%) translateY(-20px) scale(1.05); }
-  100% { transform: translateX(-50%) translateY(0) scale(1); }
+  0%   { transform: var(--flip) translateY(0) scale(1); }
+  20%  { transform: var(--flip) translateY(-20px) scale(1.05); }
+  100% { transform: var(--flip) translateY(0) scale(1); }
 }
 
-/* Laugh / Cheer */
-.emotion-laugh {
+.sprite-layer.emotion-laugh {
   animation: laughWiggle 0.5s ease-in-out;
 }
 
 @keyframes laughWiggle {
-  0%, 100% { transform: translateX(-50%) rotate(0deg); }
-  25% { transform: translateX(-50%) rotate(2deg); }
-  50% { transform: translateX(-50%) rotate(-2deg); }
-  75% { transform: translateX(-50%) rotate(2deg); }
+  0%,100% { transform: var(--flip) rotate(0deg); }
+  25%     { transform: var(--flip) rotate(2deg); }
+  50%     { transform: var(--flip) rotate(-2deg); }
+  75%     { transform: var(--flip) rotate(2deg); }
 }
 
-/* Angry / Intense */
-.emotion-intense {
+
+.sprite-layer.emotion-intense {
   animation: intenseShake 0.4s linear;
 }
 
 @keyframes intenseShake {
-  0%, 100% { transform: translateX(-50%) translateX(0); }
-  25% { transform: translateX(calc(-50% - 6px)); }
-  75% { transform: translateX(calc(-50% + 6px)); }
+  0%,100% { transform: var(--flip) translateX(0); }
+  25%     { transform: var(--flip) translateX(-6px); }
+  75%     { transform: var(--flip) translateX(6px); }
 }
 
-/* Sad / Hesitant */
-.emotion-sad {
+.sprite-layer.emotion-sad {
   animation: sadDrop 0.5s ease-out;
 }
 
 @keyframes sadDrop {
-  0% { transform: translateX(-50%) translateY(0); opacity: 1; }
-  100% { transform: translateX(-50%) translateY(8px); opacity: 0.9; }
+  0%   { transform: var(--flip) translateY(0); opacity:1; }
+  100% { transform: var(--flip) translateY(8px); opacity:0.9; }
 }
 
 /* ---------- Glossary PDF Modal ---------- */

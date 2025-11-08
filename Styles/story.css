@@ -51,18 +51,25 @@ html, body {
 --------------------------------*/
 #dialogue-box {
   position: absolute;
-  bottom: 4%;
+  bottom: 3%;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
-  max-width: 1100px;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 12px;
-  color: #fff;
-  padding: 25px 35px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  width: 92%;
+  max-width: 1150px;
+
+  /* ✅ opaque bottom → transparent top gradient */
+  background: linear-gradient(
+    to top,
+    rgba(0, 20, 40, 0.95) 0%,
+    rgba(0, 30, 60, 0.7) 45%,
+    rgba(0, 30, 60, 0.0) 100%
+  );
+
+  border-radius: 14px;
+  padding: 32px 45px;
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
   z-index: 2;
-  backdrop-filter: blur(8px);
 }
 
 /* Character name area */
@@ -73,11 +80,14 @@ html, body {
   margin-bottom: 10px;
 }
 
-/* Dialogue text */
 #dialogue-text {
-  font-size: 1.05rem;
-  line-height: 1.5rem;
-  color: #ffffff;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+
+  /* ✅ improved readability effect */
+  color: #9deaff;
+  text-shadow: 0 0 6px rgba(100, 210, 255, 0.8);
+
   user-select: none;
   transition: color 0.2s ease;
 }

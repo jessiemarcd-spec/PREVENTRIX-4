@@ -111,83 +111,93 @@ function typeWriter(text, element, speed = 10, onComplete) {
   }, speed);
 }
 
+let bgTimeout;
 
-// update background & character images if present
 function setVisuals(item) {
-  // ✅ Background
+  // ✅ Background fade
   if (item.bg) {
-    bgEl.classList.add("bg-fade"); // fade out
-
+    bgEl.classList.add("bg-fade");
     setTimeout(() => {
       bgEl.style.backgroundImage = `url("${item.bg}")`;
-      bgEl.classList.remove("bg-fade"); // fade back in
+      bgEl.classList.remove("bg-fade");
     }, 400);
   }
 
-const layer = document.getElementById("character-layer");
-layer.innerHTML = "";
+  const layer = document.getElementById("character-layer");
+  layer.innerHTML = "";
 
-if (item.characters && Array.isArray(item.characters)) {
+  if (item.characters && Array.isArray(item.characters)) {
+    const count = item.characters.length;
+    const autoPositions = {
+      1: ["center"],
+      2: ["left", "right"],
+      3: ["far-left", "center", "far-right"],
+      4: ["far-left", "left", "right", "far-right"]
+    };
 
-  const count = item.characters.length;
-  const autoPositions = {
-    1: ["center"],
-    2: ["left", "right"],
-    3: ["far-left", "center", "far-right"],
-    4: ["far-left", "left", "right", "far-right"]
-  };
+    item.characters.forEach((c, index) => {
 
-item.characters.forEach((c, index) => {
-  const img = document.createElement("img");
-  img.src = c.img;
+      // ✅ Outer container (position + speaker highlight)
+      const charEl = document.createElement("div");
+      charEl.classList.add("character");
 
-  // ✅ base class
-  img.className = "character";
+      const pos = c.pos || autoPositions[count][index];
+      charEl.classList.add(pos);
 
-  // ✅ auto-position if none defined
-  const pos = c.pos || autoPositions[count][index];
-  img.classList.add(pos);
+      const isActive =
+        c.active !== undefined
+          ? c.active
+          : c.id.toLowerCase() === item.name?.toLowerCase();
+      if (isActive) charEl.classList.add("active");
 
-  // ✅ active speaker highlight
-  const isActive =
-    c.active !== undefined
-      ? c.active
-      : c.id.toLowerCase() === item.name?.toLowerCase();
-  if (isActive) img.classList.add("active");
+      // ✅ Flip for left-side positions
+      const shouldFlip = (pos === "left" || pos === "far-left");
+      if (shouldFlip) charEl.classList.add("flip-left");
 
-  // ✅ EMOTION handling
-  if (c.emotion) {
-    // clear possible previous animations
-    img.classList.remove(
-      "emotion-shock",
-      "emotion-laugh",
-      "emotion-intense",
-      "emotion-sad"
-    );
+      // ✅ Inner wrapper for animations
+      const spriteLayer = document.createElement("div");
+      spriteLayer.classList.add("sprite-layer");
 
-    // ✅ Force reflow so repeating same animation works
-    void img.offsetWidth;
+      // ✅ Character Image
+      const img = document.createElement("img");
+      img.src = c.img;
+      img.classList.add("sprite-img");
+      img.id = `char-${c.id}`;
 
-    img.classList.add(`emotion-${c.emotion}`);
+      spriteLayer.appendChild(img);
+      charEl.appendChild(spriteLayer);
+      layer.appendChild(charEl);
+
+      // ✅ Emotion animation trigger
+      if (c.emotion) {
+        spriteLayer.classList.add(`emotion-${c.emotion}`);
+        spriteLayer.addEventListener(
+          "animationend",
+          () => spriteLayer.classList.remove(`emotion-${c.emotion}`),
+          { once: true }
+        );
+      }
+    });
+
+  } else if (item.char) {
+    // ✅ Backward compatibility for legacy single-character screens
+    const charEl = document.createElement("div");
+    charEl.classList.add("character", "active", "center");
+
+    const spriteLayer = document.createElement("div");
+    spriteLayer.classList.add("sprite-layer");
+
+    const img = document.createElement("img");
+    img.src = item.char;
+    img.classList.add("sprite-img");
+    spriteLayer.appendChild(img);
+
+    charEl.appendChild(spriteLayer);
+    layer.appendChild(charEl);
   }
-
-  img.id = `char-${c.id}`;
-  layer.appendChild(img);
-});
-
-
-} else if (item.char) {
-  // ✅ Backward compatibility mode
-  layer.innerHTML = "";
-  const img = document.createElement("img");
-  img.src = item.char;
-  img.classList.add("character", "active");
-  layer.appendChild(img);
-
-} else {
-  layer.innerHTML = "";
 }
-}
+
+
 async function handleAction(action) {
   if (action.type === "gotoGame") {
     const next = action.resumeScene || (parseInt(getQuery('scene', 1)) + 1);
