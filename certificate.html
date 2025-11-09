@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script> </head>
   <meta charset="UTF-8" />
   <title>Certificate of Completion</title>
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
@@ -8,7 +8,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
-
+    window.emailjs.init("service_l7e8quk")
     // 🔑 Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyA5oAMPGg8I6N1c5W8jlDkZUVltChk1Y8A",
@@ -34,7 +34,7 @@
         const { width, height } = page.getSize();
        const font = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
         const fontSizeName = 24;
-        const fontSizeSmall = 18;
+        const fontSizeSmall = 16;
 
         // Helper for centering text horizontally
             function centerText(text, y, size, font) {
@@ -44,9 +44,9 @@
         }
 
         // --- Draw centered text ---
-        centerText(username, 460, fontSizeName, font);
-        centerText(`${date}`, 400, fontSizeSmall, font);
-        centerText(`${score}`, 370, fontSizeSmall, font);
+        centerText(username, 200, fontSizeName, font);
+        centerText(`${date}`, 145, fontSizeSmall, font);
+        centerText(`${score}`, 95, fontSizeSmall, font);
 
         const pdfBytes = await pdfDoc.save();
         const blob = new Blob([pdfBytes], { type: "application/pdf" });
@@ -113,12 +113,17 @@ await generateCertificate(username, score, date);
   <style>
     body {
       text-align: center;
-      background: #f5f5f5;
-      font-family: "Poppins", sans-serif;
+      background: #0b3b4a;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
     }
     h1 {
       margin-bottom: 10px;
+      color: white;
+    }
+    p {
+      margin-bottom: 10px;
+      color: white;
     }
     iframe {
       width: 80%;
@@ -154,7 +159,6 @@ await generateCertificate(username, score, date);
 
   <div class="buttons">
     <button id="downloadBtn">Download</button>
-    <button id="emailBtn">Send to Email</button>
     <button id="dashboardBtn" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
   </div>
 </body>

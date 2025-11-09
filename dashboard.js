@@ -66,7 +66,7 @@ onAuthStateChanged(auth, async (user) => {
 
   if (userDoc.exists()) {
     const userData = userDoc.data();
-    document.getElementById("userScore").textContent = userData.score ?? 0; // Display the user's score
+    document.getElementById("userScore").textContent = Math.ceil(userData.score ?? 0);
   } else {
     window.location.href = "create_username.html";
   }
@@ -126,6 +126,92 @@ document.getElementById("closeStoryModal").addEventListener("click", () => {
   document.getElementById("storyModal").classList.add("hidden");
 });
 
+// Open Level Select Modal
+document.getElementById("levelSelectBtn").addEventListener("click", () => {
+  document.getElementById("levelSelectModal").classList.remove("hidden");
+});
+
+// Close Level Select Modal
+document.getElementById("closeLevelSelectModal").addEventListener("click", () => {
+  document.getElementById("levelSelectModal").classList.add("hidden");
+});
+
+// =============================
+// LEVEL UNLOCK LOGIC
+// =============================
+
+async function updateLevelUnlocks() {
+  if (!currentUser) return;
+
+  const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+  const userData = userDoc.data();
+  const progress = userData.progress || 1;
+
+  // Optional: use booleans as fallback
+  const levelBooleans = {
+    gear_up: userData.gear_up || false,
+    toolbox_challenge: userData.toolbox_challenge || false,
+    mission_planning: userData.mission_planning || false,
+    clean_sweep: userData.clean_sweep || false,
+    cable_fix: userData.cable_fix || false,
+    system_defender: userData.system_defender || false,
+    diagnosis_quest: userData.diagnosis_quest || false,
+    repair_rush: userData.repair_rush || false,
+    final_boss: userData.final_boss || false
+  };
+
+  document.querySelectorAll(".level-btn").forEach(btn => {
+    const requiredProgress = parseInt(btn.dataset.level, 10);
+
+    if (progress >= requiredProgress) {
+      btn.disabled = false;
+      btn.classList.remove("locked");
+    } else {
+      btn.disabled = true;
+      btn.classList.add("locked");
+    }
+  });
+}
+
+// =============================
+// LEVEL BUTTON NAVIGATION
+// =============================
+document.querySelectorAll(".level-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    const scene = button.dataset.scene;
+    if (button.disabled) return; // prevent locked levels
+
+    // ✅ Go directly to story.html with that scene number
+    window.location.href = `story.html?scene=${scene}`;
+  });
+});
+
+// Run whenever Level Select opens
+document.getElementById("levelSelectBtn").addEventListener("click", async () => {
+  document.getElementById("levelSelectModal").classList.remove("hidden");
+  await updateLevelUnlocks();
+});
+// =============================
+// CREDITS MODAL
+// =============================
+const creditsBtn = document.getElementById("creditsBtn");
+const creditsModal = document.getElementById("creditsModal");
+const closeCreditsModal = document.getElementById("closeCreditsModal");
+
+creditsBtn.addEventListener("click", () => {
+  creditsModal.classList.remove("hidden");
+  dropdownMenu.classList.remove("show"); // close dropdown when opened
+});
+
+closeCreditsModal.addEventListener("click", () => {
+  creditsModal.classList.add("hidden");
+});
+
+// Optional: close when clicking outside
+creditsModal.addEventListener("click", (e) => {
+  if (e.target === creditsModal) creditsModal.classList.add("hidden");
+});
+
 
 // =============================
 // LOAD LEADERBOARD
@@ -159,18 +245,20 @@ async function loadLeaderboard() {
 
     leaderboardBody.innerHTML = "";
 
-    users.forEach((player, index) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${player.name}</td>
-        <td>
-          ${renderBadges(player.badges)}
-        </td>
-        <td>${player.score}</td>
-      `;
-      leaderboardBody.appendChild(row);
-    });
+users.forEach((player, index) => {
+  const roundedScore = Math.ceil(player.score); // ✅ round up any decimal score
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${index + 1}</td>
+    <td>${player.name}</td>
+    <td>
+      ${renderBadges(player.badges)}
+    </td>
+    <td>${roundedScore}</td>
+  `;
+  leaderboardBody.appendChild(row);
+});
+
   } catch (error) {
     console.error("Error loading leaderboard:", error);
     leaderboardBody.innerHTML = `<tr><td colspan="4">Failed to load leaderboard.</td></tr>`;
