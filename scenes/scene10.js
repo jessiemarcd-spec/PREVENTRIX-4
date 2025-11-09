@@ -121,7 +121,7 @@ export const scene = [
   },
   {
     name: "Liz",
-    text: "You're such a soilsport, man.",
+    text: "You're such a spoilsport, man.",
     characters: [
       { id: "Noel", img: "Images/Char/noel_angry.png" },
       { id: "Joanah", img: "Images/Char/joanah_angry.png" },

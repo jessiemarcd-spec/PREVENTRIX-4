@@ -427,7 +427,7 @@ export const scene = [
   {
       action: {
       type: "gotoGame",
-      id: 1,              // Game 1
+      id: 9,              // Game 1
     }
   }
 ];

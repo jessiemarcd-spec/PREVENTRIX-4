@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Certificate of Completion</title>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    // 🔑 Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5oAMPGg8I6N1c5W8jlDkZUVltChk1Y8A",
+      authDomain: "gamesite-9850d.firebaseapp.com",
+      projectId: "gamesite-9850d",
+      storageBucket: "gamesite-9850d.firebasestorage.app",
+      messagingSenderId: "757972868175",
+      appId: "1:757972868175:web:043b2969258cf0bdfdde3a"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    async function generateCertificate(username, score, date) {
+      try {
+        const response = await fetch("certificate_template.pdf");
+        if (!response.ok) throw new Error("Template not found.");
+        const templateBytes = await response.arrayBuffer();
+
+        const pdfDoc = await PDFLib.PDFDocument.load(templateBytes);
+        const page = pdfDoc.getPages()[0];
+        const { width, height } = page.getSize();
+       const font = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+        const fontSizeName = 24;
+        const fontSizeSmall = 18;
+
+        // Helper for centering text horizontally
+            function centerText(text, y, size, font) {
+            const textWidth = font.widthOfTextAtSize(text, size);
+            const x = (width - textWidth) / 2;
+            page.drawText(text, { x, y, size, font, color: PDFLib.rgb(0, 0, 0) });
+        }
+
+        // --- Draw centered text ---
+        centerText(username, 460, fontSizeName, font);
+        centerText(`${date}`, 400, fontSizeSmall, font);
+        centerText(`${score}`, 370, fontSizeSmall, font);
+
+        const pdfBytes = await pdfDoc.save();
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+
+        // ✅ Display it
+        const frame = document.getElementById("pdfFrame");
+        frame.src = url;
+
+        // ✅ Download
+        document.getElementById("downloadBtn").onclick = () => {
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "Certificate.pdf";
+          a.click();
+        };
+
+        console.log("✅ Certificate generated successfully");
+      } catch (err) {
+        console.error("Error generating certificate:", err);
+        document.getElementById("pdfFrame").outerHTML = "<p style='color:red'>Failed to load certificate.</p>";
+      }
+    }
+
+    // 🔐 Wait for user
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      let score = 0;
+      try {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          score = userSnap.data().score || 0;
+        }
+      } catch (err) {
+        console.warn("Could not fetch score:", err);
+      }
+
+let username = "Player";
+
+try {
+  const userRef = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userRef);
+  if (userSnap.exists()) {
+    const data = userSnap.data();
+    username = data.username || user.displayName || user.email || "Player";
+    score = data.score || 0;
+  }
+} catch (err) {
+  console.warn("Could not fetch user data:", err);
+  username = user.displayName || user.email || "Player";
+}
+
+const date = new Date().toLocaleDateString("en-US", { timeZone: "Asia/Manila" });
+await generateCertificate(username, score, date);
+
+    });
+  </script>
+
+  <style>
+    body {
+      text-align: center;
+      background: #f5f5f5;
+      font-family: "Poppins", sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    iframe {
+      width: 80%;
+      height: 600px;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background: #333;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>🎉 Congratulations!</h1>
+  <p>Your Certificate of Completion</p>
+
+  <iframe id="pdfFrame"></iframe>
+
+  <div class="buttons">
+    <button id="downloadBtn">Download</button>
+    <button id="emailBtn">Send to Email</button>
+    <button id="dashboardBtn" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
+  </div>
+</body>
+</html>

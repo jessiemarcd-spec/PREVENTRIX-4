@@ -208,6 +208,14 @@ async function handleAction(action) {
     return;
   }
 
+  if (action.type === "gotoPage") {
+    const next = action.resumeScene || (parseInt(getQuery('scene', 1)) + 1);
+    await saveProgress(next);
+    window.location.href = action.url;
+    return;
+  }
+
+
   if (action.type === "saveProgress") {
     await saveProgress(action.value);
   }
@@ -247,6 +255,12 @@ async function showNext() {
       window.location.href = `game.html?id=${item.action.id}&resumeScene=${item.action.resumeScene || ''}`;
       return;
     }
+  if (item.action.type === 'gotoPage') {
+    await saveProgress(item.action.resumeScene || (parseInt(getQuery('scene', 1)) + 1));
+    window.location.href = item.action.url;
+    return;
+  }
+
     if (item.action.type === 'saveProgress') {
       await saveProgress(item.action.value);
     }
