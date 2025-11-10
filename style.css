@@ -456,13 +456,13 @@ button:active {
 .credit-card.solo {
   display: inline-block;
   margin-top: 15px;
-  transform: scale(0.55); /* Adjust mo kung gaano kaliit gusto mo (0.75, 0.65, etc.) */
+  transform: scale(0.45); /* Adjust mo kung gaano kaliit gusto mo (0.75, 0.65, etc.) */
 }
 
 /* Profile Picture */
 .pfp-frame img {
-  width: 60px;   /* Default laki - pwede mong liitan 70 or 60 */
-  height: 60px;
+  width: 55px;   /* Default laki - pwede mong liitan 70 or 60 */
+  height: 55px;
   object-fit: cover;
   border-radius: 50%;
   border: 2px solid #ffffff;
@@ -470,13 +470,13 @@ button:active {
 
 /* Name Text */
 .credit-name {
-  font-size: 10px; /* Liitan dito */
+  font-size: 8px; /* Liitan dito */
   font-weight: bold;
   margin-top: 8px;
 }
 
 /* Role Text */
 .credit-role {
-  font-size: 10px; /* Liitan dito */
+  font-size: 8px; /* Liitan dito */
   opacity: 0.85;
 }
