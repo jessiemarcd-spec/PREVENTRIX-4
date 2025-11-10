@@ -135,7 +135,7 @@ export const scene = [
   },
   {
     name: "Julius",
-    text: "<span color='orange'> SD... UP... CLN... UD... BU? </span>",
+    text: "<span color='orange'> BU... SD... UP... CLN... UD? </span>",
     characters: [
       { id: "julius", img: "Images/Char/julius_neutral.png" },
     ],
