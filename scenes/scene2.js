@@ -85,7 +85,7 @@ export const scene = [
   },
   {
     name: "Liz",
-    text: "Use the units here to summon the supplies. But you need to select the <span class='glossary' data-doc='tools.pdf'> tool and its proper function first. </span>",
+    text: "Use the units here to summon the supplies. But you need to select the <span class='glossary' data-doc='2ToolBox Challenge.pdf'> tool and its proper function first. </span>",
     characters: [
       { id: "julius", img: "Images/Char/julius_neutral.png" },
       { id: "liz", img: "Images/Char/liz_explaining.png" },
