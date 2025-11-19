@@ -163,7 +163,7 @@ export const scene = [
   },
     {
     name: "Joanah",
-    text: "Cleaning computers are a lot more complicated than it looks. It requires certain procedures that need careful, expert hands. <span class='glossary' data-doc='clean.pdf'> You can learn more about it here </span>",
+    text: "Cleaning computers are a lot more complicated than it looks. It requires certain procedures that need careful, expert hands. <span class='glossary' data-doc='4 CLEAN SWEEP.pdf'> You can learn more about it here </span>",
     characters: [
       { id: "julius", img: "Images/Char/julius_neutral.png" },
       { id: "joanah", img: "Images/Char/joanah_explaining.png" }
