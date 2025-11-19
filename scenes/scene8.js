@@ -122,7 +122,7 @@ export const scene = [
   },
   {
     name: "Noel",
-    text: "Every diagnosis can be traced back to a problem in the system, <span class='glossary' data-doc='repair.pdf'> which traces back to a solution to fix those problems. </span> We'll be fixing those problems right now.",
+    text: "Every diagnosis can be traced back to a problem in the system, <span class='glossary' data-doc='8 Repair Rush.pdf'> which traces back to a solution to fix those problems. </span> We'll be fixing those problems right now.",
     characters: [
       { id: "julius", img: "Images/Char/julius_sad.png" },
       { id: "noel", img: "Images/Char/noel_explaining.png" }
