@@ -22,7 +22,7 @@ export const scene = [
   },
   {
     name: "Liz",
-    text: "Nice! All according to code with the <span class='glossary' data-doc'#'> TESDA CSS NCII. </span> Good work out there!",
+    text: "Nice! All according to code with the <span class='glossary' data-doc'TR Computer Systems Servicing NC II .pdf'> TESDA CSS NCII. </span> Good work out there!",
     characters: [
       { id: "julius", img: "Images/Char/julius_happy.png" },
       { id: "liz", img: "Images/Char/liz_approve.png", emotion: "laugh" },
