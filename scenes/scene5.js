@@ -53,7 +53,7 @@ export const scene = [
   },
   {
     name: "Joanah",
-    text: "Each wire has a <span class='glossary' data-doc='wire.pdf'> specific port and function within the computer's system. </span> So we need to make sure we connected them right.",
+    text: "Each wire has a <span class='glossary' data-doc='5 CABLE FIX.pdf'> specific port and function within the computer's system. </span> So we need to make sure we connected them right.",
     characters: [
       { id: "julius", img: "Images/Char/julius_neutral.png" },
       { id: "joanah", img: "Images/Char/joanah_explaining.png" }
