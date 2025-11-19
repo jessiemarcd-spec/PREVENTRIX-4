@@ -71,7 +71,7 @@ export const scene = [
   {
     name: "Julius",
     bg: "Images/Background/intro_game2-3.png",
-    text: "I may be a rookie, but I'm also a member of the digital age. Even I know the <span class='glossary' data-doc='antivirus.pdf'> dangers of malware and the importance of virus and system security. </span>",
+    text: "I may be a rookie, but I'm also a member of the digital age. Even I know the <span class='glossary' data-doc='6 SYSTEM DEFENDER.pdf'> dangers of malware and the importance of virus and system security. </span>",
     characters: [
       { id: "julius", img: "Images/Char/julius_neutral.png"},
     ],
