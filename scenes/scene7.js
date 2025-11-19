@@ -136,7 +136,7 @@ export const scene = [
   },
   {
     name: "Noel",
-    text: "An accurate diagnosis is half the battle when it comes to applying repairs. The importance of <span class='glossary' data-doc='diagnostic.pdf'> a clear and accurate diagnostis of a computer's condition can be found here.",
+    text: "An accurate diagnosis is half the battle when it comes to applying repairs. The importance of <span class='glossary' data-doc='7 DIAGNOSIS QUEST.pdf'> a clear and accurate diagnostis of a computer's condition can be found here.",
     characters: [
       { id: "julius", img: "Images/Char/julius_happy.png" },
       { id: "noel", img: "Images/Char/noel_explaining.png" },
