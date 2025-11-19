@@ -387,7 +387,7 @@ export const scene = [
   },
   {
     name: "Liz",
-    text: "You can learn more by <span class='glossary' data-doc='safety.pdf'> clicking this link in the text. </span>",
+    text: "You can learn more by <span class='glossary' data-doc='1 GEAR UP.pdf'> clicking this link in the text. </span>",
     characters: [
       { id: "julius", img: "Images/Char/julius_neutral.png" },
       { id: "liz", img: "Images/Char/liz_happy.png" }
