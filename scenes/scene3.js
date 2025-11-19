@@ -142,7 +142,7 @@ export const scene = [
   },
   {
     name: "Julius",
-    text: "Wait, I know this! These aren't just letters... <span class='glossary' data-doc='maintenance.pdf'> these are steps! </span>",
+    text: "Wait, I know this! These aren't just letters... <span class='glossary' data-doc='3Mission planning.pdf'> these are steps! </span>",
     characters: [
       { id: "julius", img: "Images/Char/julius_excited.png", emotion: "shock" },
     ],
@@ -164,4 +164,5 @@ export const scene = [
       id: 3,              // Game 1
     }
   }
+
 ];
